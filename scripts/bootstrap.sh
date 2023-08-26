@@ -29,7 +29,7 @@ main() {
     fi
 
     # Require nano to edit the config.
-    if ! command -v nano &> /dev/null then
+    if ! command -v nano &> /dev/null; then
         echo "Could not find nano. Please install it and try again."
         exit 1
     fi
@@ -70,8 +70,6 @@ main() {
 
     # Install Tailscale if requested.
     if [ "$TS_ENABLED" = "1" ]; then
-
-        ec
 
         # Bootstrap Tailscale, per https://tailscale.com/kb/installation/
         curl -fsSL https://tailscale.com/install.sh | sh
