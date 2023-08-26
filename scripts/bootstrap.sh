@@ -29,7 +29,7 @@ main() {
     fi
 
     # Require nano to edit the config.
-    if ! command -v nano &> /dev/null; then
+    if ! command -v nano >/dev/null; then
         echo "Could not find nano. Please install it and try again."
         exit 1
     fi
