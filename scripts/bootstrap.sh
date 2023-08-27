@@ -79,7 +79,6 @@ main() {
     
     else
         echo -e "TS_ENABLED has non-1 value, skipping Tailscale setup\n"
-
     fi
 
     # Install absolute basic dependencies
