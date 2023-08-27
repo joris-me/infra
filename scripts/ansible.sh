@@ -74,6 +74,7 @@ main() {
     sed -i -e '/^\(#\|\)X11Forwarding/s/^.*$/X11Forwarding no/' /etc/ssh/sshd_config
     sed -i -e '/^#AllowTcpForwarding/s/^.*$/AllowTcpForwarding no/' /etc/ssh/sshd_config
     sed -i -e '/^#AllowAgentForwarding/s/^.*$/AllowAgentForwarding no/' /etc/ssh/sshd_config
+    systemctl restart sshd
     
     ################################
     # SSH authorized_keys
@@ -105,7 +106,7 @@ main() {
         tailscale up --auth-key $TS_AUTH_KEY
     fi
 
-    echo -e "\nDone!"
+    reboot
 }
 
 main
