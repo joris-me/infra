@@ -1,0 +1,23 @@
+---
+
+- name: Update all hosts
+  hosts: all
+  become: true
+  remote_user: ansible
+  tasks:
+
+    - name: Upgrade packages
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: full
+        autoclean: true
+        autoremove: true
+
+    - name: Install default packages
+      ansible.builtin.apt:
+        name:
+          - curl
+          - htop
+          - acl
+          - apparmor # for docker stuff
+          - prometheus-node-exporter # for monitoring

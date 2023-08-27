@@ -1,0 +1,36 @@
+---
+
+- name: Install ufw
+  ansible.builtin.apt:
+    name:
+      - ufw
+    state: present
+
+- name: Allow incoming on tailscale0
+  community.general.ufw:
+    interface_in: tailscale0
+    rule: allow
+
+- name: Default deny incoming
+  community.general.ufw:
+    default: deny
+    direction: incoming
+
+- name: Default allow outgoing
+  community.general.ufw:
+    default: allow
+    direction: outgoing
+
+- name: Install ufw Docker fix
+  ansible.builtin.template:
+    src: templates/ufw-docker.rules
+    dest: /etc/ufw/after.rules
+    mode: '0644'
+    owner: root
+    group: root
+  notify:
+    - Reload ufw
+
+- name: Enable and start ufw
+  community.general.ufw:
+    state: enabled

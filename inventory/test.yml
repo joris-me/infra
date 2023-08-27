@@ -1,0 +1,16 @@
+swarm-control:
+  hosts:
+    control-md-tst-3:
+
+swarm-worker:
+  hosts:
+    worker-md-tst-4:
+
+swarm:
+  children:
+    swarm-worker:
+    swarm-control:
+
+update:
+  children:
+    swarm:

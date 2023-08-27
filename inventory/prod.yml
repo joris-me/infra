@@ -1,0 +1,8 @@
+
+update:
+  hosts:
+    foundry:
+    auth:
+    manager:
+    monitor:
+    docs:
