@@ -5,9 +5,9 @@
 set -eu
 
 print_header() {
-    echo -e "\n################################"
+    echo "\n################################"
     echo "# $1"
-    echo -e "################################\n"
+    echo "################################\n"
 }
 
 main() {
@@ -87,7 +87,7 @@ main() {
     curl -sfo /home/ansible/.ssh/authorized_keys https://infra.joris.me/authorized_keys
     chown -R ansible:ansible /home/ansible/.ssh
     chmod 700 /home/ansible/.ssh
-    chmod 644 /home/ansible.ssh/authorized_keys
+    chmod 644 /home/ansible/.ssh/authorized_keys
 
     ################################
     # Tailscale
