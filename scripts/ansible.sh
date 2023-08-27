@@ -4,6 +4,13 @@
 # -u to treat unset variables as an error when substituting
 set -eu
 
+print_header() {
+    echo "################################"
+    echo "# $1"
+    echo "################################"
+    echo ""
+}
+
 main() {
 
     # Ensure we are root.
@@ -28,15 +35,19 @@ main() {
         exit 1
     fi
 
-    # Require nano to edit the config.
-    if ! command -v nano >/dev/null; then
-        echo "Could not find nano. Please install it and try again."
-        exit 1
-    fi
+    ################################
+    # Dependencies
+    ################################
 
     # Install absolute basic dependencies
+    print_header "Dependencies"
     echo "Installing curl, sudo"
     apt install curl sudo -y
+
+    ################################
+    # User management
+    ################################
+    print_header "User management"
 
     # Create sudo group
     if [ ! $(getent group sudo) ]; then
@@ -54,6 +65,11 @@ main() {
         echo "User 'ansible' exists"
     fi
 
+    ################################
+    # SSH authorized_keys
+    ################################
+    print_header "SSH authorized_keys"
+
     # Install authorized_keys
     echo "Installing /home/ansible/authorized_keys"
     mkdir -p /home/ansible/.ssh
@@ -61,8 +77,13 @@ main() {
     chown -R ansible:ansible /home/ansible/.ssh
     chmod -R 600 /home/ansible/.ssh
 
+    ################################
+    # Tailscale
+    ################################
+    print_header "Tailscale"
+
     # Obtain Tailscale auth key
-    read -p "Enter Tailscale auth key: " TS_AUTH_KEY
+    read -p "Enter Tailscale auth key: " TS_AUTH_KEY </dev/tty
 
     # Bootstrap Tailscale, per https://tailscale.com/kb/installation/
     echo "Installing Tailscale"
@@ -71,7 +92,7 @@ main() {
     # Enable Tailscale with the given auth key
     tailscale up --auth-key $TS_AUTH_KEY
 
-    echo "Done!"
+    echo -e "\nDone!"
 }
 
 main
