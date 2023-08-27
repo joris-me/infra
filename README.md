@@ -15,6 +15,16 @@ This repository contains everything related to `joris.me` infrastructure:
 
 ## Ansible
 
+Make sure to [install the Ansible dependencies](#install-ansible-dependencies) first.
+
+### Install Ansible dependencies
+
+Run this **locally**, on your machine:
+
+```bash
+$ ansible-galaxy collection install community.docker
+```
+
 ### Updating hosts
 Runs `apt update && apt upgrade` and ensures some general packages are installed.
 
