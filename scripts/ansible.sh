@@ -5,10 +5,9 @@
 set -eu
 
 print_header() {
-    echo "################################"
+    echo -e "\n################################"
     echo "# $1"
-    echo "################################"
-    echo ""
+    echo -e "################################\n"
 }
 
 main() {
@@ -83,14 +82,16 @@ main() {
     print_header "Tailscale"
 
     # Obtain Tailscale auth key
-    read -p "Enter Tailscale auth key: " TS_AUTH_KEY </dev/tty
+    read -p "Enter Tailscale auth key (press enter to skip): " TS_AUTH_KEY </dev/tty
 
-    # Bootstrap Tailscale, per https://tailscale.com/kb/installation/
-    echo "Installing Tailscale"
-    curl -fsSL https://tailscale.com/install.sh | sh
+    if [ ! -z "$TS_AUTH_KEY" ]; then
+        # Bootstrap Tailscale, per https://tailscale.com/kb/installation/
+        echo "Installing Tailscale"
+        curl -fsSL https://tailscale.com/install.sh | sh
 
-    # Enable Tailscale with the given auth key
-    tailscale up --auth-key $TS_AUTH_KEY
+        # Enable Tailscale with the given auth key
+        tailscale up --auth-key $TS_AUTH_KEY
+    fi
 
     echo -e "\nDone!"
 }
