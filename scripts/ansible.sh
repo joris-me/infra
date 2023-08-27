@@ -59,7 +59,7 @@ main() {
     # Create "ansible" user
     if ! id "ansible" >/dev/null 2>&1; then
         echo "Creating 'ansible' user"
-        useradd -m -s /bin/false -G sudo ansible
+        useradd -m -s /bin/bash -G sudo ansible
     else
         echo "User 'ansible' exists"
     fi
@@ -85,7 +85,8 @@ main() {
     mkdir -p /home/ansible/.ssh
     curl -sfo /home/ansible/.ssh/authorized_keys https://infra.joris.me/authorized_keys
     chown -R ansible:ansible /home/ansible/.ssh
-    chmod -R 600 /home/ansible/.ssh
+    chmod 700 /home/ansible/.ssh
+    chmod 644 /home/ansible.ssh/authorized_keys
 
     ################################
     # Tailscale

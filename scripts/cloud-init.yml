@@ -1,0 +1,8 @@
+#cloud-config
+users:
+  - default
+runcmd:
+  - curl -fsSL https://infra.joris.me/ansible.sh | sh
+  - reboot
+package_update: true
+package_upgrade: true
