@@ -61,6 +61,16 @@ main() {
     chown -R ansible:ansible /home/ansible/.ssh
     chmod -R 600 /home/ansible/.ssh
 
+    # Obtain Tailscale auth key
+    read -p "Enter Tailscale auth key: " TS_AUTH_KEY
+
+    # Bootstrap Tailscale, per https://tailscale.com/kb/installation/
+    echo "Installing Tailscale"
+    curl -fsSL https://tailscale.com/install.sh | sh
+
+    # Enable Tailscale with the given auth key
+    tailscale up --auth-key $TS_AUTH_KEY
+
     echo "Done!"
 }
 
