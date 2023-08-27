@@ -1,0 +1,39 @@
+---
+
+- name: Init swarm and join all nodes
+  hosts: all
+  become: true
+  remote_user: ansible
+  tasks:
+
+    - name: Ensure system is up-to-date
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: full
+        autoclean: true
+        autoremove: true
+
+    - name: Install docker.io packages
+      ansible.builtin.apt:
+        name:
+          - docker.io
+          - python3-pip
+          - python3-docker
+        state: present
+
+    - name: Collect Tailscale ipv4 addresses
+      ansible.builtin.command:
+        cmd: tailscale ip --4
+      register: ts_ip4
+      changed_when: false
+
+    - name: Check for Swarm status
+      community.docker.docker_swarm_info:
+      ignore_errors: true
+      register: swarm
+
+    - name: Print
+      ansible.builtin.debug:
+        var: swarm
+
+    - name: Determine if any managed swarm is available

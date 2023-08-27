@@ -5,6 +5,8 @@ swarm-control:
 swarm-worker:
   hosts:
     worker-md-tst-4:
+    worker-sm-tst-5:
+    worker-sm-tst-6:
 
 swarm:
   children:
