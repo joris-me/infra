@@ -35,8 +35,8 @@ main() {
     fi
 
     # Install absolute basic dependencies
-    echo "Installing curl, wget, sudo"
-    apt install curl wget sudo -y
+    echo "Installing curl, sudo"
+    apt install curl sudo -y
 
     # Create sudo group
     if [ ! $(getent group sudo) ]; then
@@ -49,7 +49,7 @@ main() {
     # Create "ansible" user
     if ! id "ansible" >/dev/null 2>&1; then
         echo "Creating 'ansible' user"
-        useradd -m -s /bin/false -G nosudo ansible
+        useradd -m -s /bin/false -G sudo ansible
     else
         echo "User 'ansible' exists"
     fi
@@ -57,9 +57,9 @@ main() {
     # Install authorized_keys
     echo "Installing /home/ansible/authorized_keys"
     mkdir -p /home/ansible/.ssh
-    wget -o /home/ansible/.ssh/authorized_keys https://infra.joris.me/authorized_keys
+    curl -sfo /home/ansible/.ssh/authorized_keys https://infra.joris.me/authorized_keys
     chown -R ansible:ansible /home/ansible/.ssh
-    chmod -R 660 /home/ansible/.ssh
+    chmod -R 600 /home/ansible/.ssh
 
     echo "Done!"
 }
