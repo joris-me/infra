@@ -10,7 +10,7 @@ docker swarm init \
     --data-path-addr $(tailscale ip -4)
 
 # Delete the ingress netowrk.
-docker network rm ingress </bin/yes
+yes | docker network rm ingress
 
 # Re-create the ingress network, matching the Tailscale MTU.
 docker network create \
