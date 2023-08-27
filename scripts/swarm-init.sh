@@ -11,6 +11,7 @@ docker swarm init \
 
 # Delete the ingress netowrk.
 yes | docker network rm ingress
+sleep 1
 
 # Re-create the ingress network, matching the Tailscale MTU.
 docker network create \
