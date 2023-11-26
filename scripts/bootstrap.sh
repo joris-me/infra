@@ -36,6 +36,7 @@ main() {
 
     # Export our default config.
     CONF=/tmp/bootstrap.env
+	rm $CONF
     echo "# Configure the bootstrapping parameters." >>$CONF
     echo "# Lines starting with a hashtag are comments." >>$CONF
     echo "" >> /tmp/bootstrap >>$CONF
@@ -61,11 +62,11 @@ main() {
     OLDHOSTNAME=$(hostname)
     echo "Updating hostname from '$OLDHOSTNAME' to '$HOSTNAME':"
     echo "  - /etc/hostname"
-    sed -i "s/$OLDHOSTNAME/$HOSTAME/g" /etc/hostname
+    sed -i "s/$OLDHOSTNAME/$HOSTNAME/g" /etc/hostname
 
     # Update the hostname in /etc/hosts
     echo "  - /etc/hosts"
-    sed -i "s/$OLDHOSTNAME/$HOSTAME/g" /etc/hosts
+    sed -i "s/$OLDHOSTNAME/$HOSTNAME/g" /etc/hosts
     echo -e "Done\n"
 
     # Install Tailscale if requested.
